@@ -37,14 +37,17 @@ namespace NinaPOS.ViewModels
 
             if (usuario is null)
             {
-                mensajeError = "Credenciales incorrectas :p.";
-                contrasena = string.Empty;
+                MensajeError = "Credenciales incorrectas :p.";
+                Contrasena = string.Empty;
                 return;
             }
 
             _sesion.UsuarioLogueado = usuario;
 
-            Application.Current!.MainPage = _services.GetService<MainPage>();
+            if (Application.Current?.Windows.Count > 0)
+            {
+                Application.Current.Windows[0].Page = _services.GetRequiredService<MainPage>();
+            }
         }
     }
 }

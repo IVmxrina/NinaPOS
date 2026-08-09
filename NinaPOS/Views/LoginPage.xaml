@@ -12,7 +12,7 @@
                FontSize="20" HeightRequest="64" />
 
         <Entry Placeholder="Contraseña"
-               Text="{Binding Password}"
+               Text="{Binding Contrasena}"
                IsPassword="True"
                FontSize="20" HeightRequest="64"
                ReturnCommand="{Binding IniciarSesionCommand}" />
