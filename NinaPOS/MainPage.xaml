@@ -14,19 +14,37 @@
                              SelectionMode="Single">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid ColumnDefinitions="3*,1*,1*,Auto"
-                              Padding="8" MinimumHeightRequest="64">
+                        <Grid ColumnDefinitions="3*,2*,1*,Auto"
+      Padding="8" MinimumHeightRequest="64">
+
                             <Label Text="{Binding Nombre}"
-                                   VerticalOptions="Center" FontSize="18" />
-                            <Label Grid.Column="1" Text="{Binding Cantidad}"
-                                   VerticalOptions="Center" FontSize="18"
-                                   HorizontalOptions="Center" />
+           VerticalOptions="Center" FontSize="18" />
+
+                            <!-- Columna de cantidad con -/+ -->
+                            <HorizontalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                                <Button Text="-"
+                WidthRequest="44" HeightRequest="44" FontSize="20"
+                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DisminuirCantidadCommand}"
+                CommandParameter="{Binding .}" />
+
+                                <Label Text="{Binding Cantidad}"
+               FontSize="18" VerticalOptions="Center"
+               HorizontalOptions="Center" WidthRequest="32"
+               HorizontalTextAlignment="Center" />
+
+                                <Button Text="+"
+                WidthRequest="44" HeightRequest="44" FontSize="20"
+                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AumentarCantidadCommand}"
+                CommandParameter="{Binding .}" />
+                            </HorizontalStackLayout>
+
                             <Label Grid.Column="2" Text="{Binding Subtotal, StringFormat='{0:C2}'}"
-                                   VerticalOptions="Center" FontSize="18" />
+           VerticalOptions="Center" FontSize="18" />
+
                             <Button Grid.Column="3" Text="✕"
-                                    WidthRequest="64" HeightRequest="64"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EliminarItemCommand}"
-                                    CommandParameter="{Binding .}" />
+            WidthRequest="64" HeightRequest="64"
+            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EliminarItemCommand}"
+            CommandParameter="{Binding .}" />
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

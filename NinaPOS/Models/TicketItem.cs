@@ -12,6 +12,7 @@ public partial class TicketItem : ObservableObject
     public decimal PrecioUnitario { get; set; }
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(Subtotal))] //Asegura actualizacion
     private int cantidad = 1;
 
     // Propiedad calculada: se recalcula sola cada vez que la lee la UI

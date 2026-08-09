@@ -68,6 +68,25 @@ public partial class TicketViewModel : ObservableObject
         RecalcularTotal();
     }
 
+    [RelayCommand]
+    private void DisminuirCantidad(TicketItem item)
+    {
+        if(item.Cantidad >= 1)
+        { 
+            item.Cantidad--;
+        }
+
+        RecalcularTotal();
+    }
+    [RelayCommand]
+    private void AumentarCantidad(TicketItem item)
+    {
+        item.Cantidad++;
+        
+        RecalcularTotal();
+    }
+
+
     // RF-10: eliminar un articulo ya escaneado
     [RelayCommand]
     private void EliminarItem(TicketItem item)
@@ -75,6 +94,8 @@ public partial class TicketViewModel : ObservableObject
         Items.Remove(item);
         RecalcularTotal();
     }
+
+
 
     private void RecalcularTotal()
     {
