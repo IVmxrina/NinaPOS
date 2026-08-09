@@ -1,17 +1,22 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using NinaPOS.Views;
 
 namespace NinaPOS
 {
     public partial class App : Application
     {
-        public App()
+
+        private readonly IServiceProvider _services;
+
+        public App(IServiceProvider services)
         {
             InitializeComponent();
+            _services = services;
         }
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            return new Window(new AppShell());
+            return new Window(_services.GetRequiredService<Views.LoginPage>());
         }
     }
 }

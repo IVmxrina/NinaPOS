@@ -1,5 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using NinaPOS.Models;
+using NinaPOS.Services;
 using NinaPOS.ViewModels;
 namespace NinaPOS
 {
@@ -20,6 +22,9 @@ namespace NinaPOS
             builder.Services.AddTransient<CounterViewModel>();
             builder.Services.AddTransient<MainPage>();
             builder.Services.AddTransient<TicketViewModel>();
+            builder.Services.AddTransient<LoginViewModel>();
+            builder.Services.AddTransient<Views.LoginPage>();
+            builder.Services.AddSingleton<SesionActual>();
 
             var app = builder.Build();
 
@@ -27,7 +32,8 @@ namespace NinaPOS
             using (var scope = app.Services.CreateScope())
             {
                 var db = scope.ServiceProvider.GetRequiredService<NinaPosDbContext>();
-                db.Database.EnsureCreated();
+                //System.Diagnostics.Debug.WriteLine($"[NinaPOS] Ruta de la BD: {NinaPosDbContext.DbPath}");
+                db.Database.Migrate();
 
                 if (!db.Productos.Any())
                 {
@@ -35,6 +41,10 @@ namespace NinaPOS
                         new Producto { CodigoBarras = "7501234567890", Nombre = "Leche Entera 1L", Precio = 1.25m, Categoria = "Lácteos" },
                         new Producto { CodigoBarras = "7501234567891", Nombre = "Pan de Molde", Precio = 2.10m, Categoria = "Panadería" },
                         new Producto { CodigoBarras = "7501234567892", Nombre = "Manzanas (kg)", Precio = 1.80m, Categoria = "Frutas" }
+                    );
+                    db.Usuarios.AddRange(
+                        new Usuario { CodigoEmpleado = "C001", Contrasena = "1234", Nombre = "Cajero Demo", Rol = RolUsuario.Cajero },
+                        new Usuario { CodigoEmpleado = "G001", Contrasena = "9999", Nombre = "Gerente Demo", Rol = RolUsuario.Gerente }
                     );
                     db.SaveChanges();
                 }

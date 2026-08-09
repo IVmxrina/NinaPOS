@@ -1,0 +1,27 @@
+﻿<ContentPage
+    x:Class="NinaPOS.Views.LoginPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <VerticalStackLayout Padding="32" Spacing="16" VerticalOptions="Center">
+        <Label Text="NinaPOS" FontSize="36" FontAttributes="Bold"
+               HorizontalOptions="Center" />
+
+        <Entry Placeholder="Código de empleado"
+               Text="{Binding CodigoEmpleado}"
+               FontSize="20" HeightRequest="64" />
+
+        <Entry Placeholder="Contraseña"
+               Text="{Binding Password}"
+               IsPassword="True"
+               FontSize="20" HeightRequest="64"
+               ReturnCommand="{Binding IniciarSesionCommand}" />
+
+        <Label Text="{Binding MensajeError}" TextColor="Red"
+               HorizontalOptions="Center" />
+
+        <Button Text="Iniciar sesión"
+                Command="{Binding IniciarSesionCommand}"
+                HeightRequest="64" FontSize="20" />
+    </VerticalStackLayout>
+</ContentPage>
