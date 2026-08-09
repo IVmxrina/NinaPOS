@@ -33,7 +33,7 @@ namespace NinaPOS.ViewModels
         [RelayCommand]
         private void IniciarSesion()
         {
-            var usuario = _db.Usuarios.FirstOrDefault(u => u.CodigoEmpleado == codigoEmpleado && u.Contrasena == contrasena);
+            var usuario = _db.Usuarios.FirstOrDefault(u => u.CodigoEmpleado == CodigoEmpleado && u.Contrasena == Contrasena);
 
             if (usuario is null)
             {
