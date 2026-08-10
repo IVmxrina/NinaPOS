@@ -1,0 +1,41 @@
+﻿<ContentPage
+    x:Class="NinaPOS.Views.CobroPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:NinaPOS.ViewModels"
+    x:DataType="vm:CobroViewModel">
+
+    <VerticalStackLayout Padding="24" Spacing="16" VerticalOptions="Center">
+
+        <Label Text="{Binding TotalAPagar, StringFormat='Total a pagar: {0:C2}'}"
+               FontSize="32" FontAttributes="Bold" HorizontalOptions="Center" />
+
+        <Entry Placeholder="Efectivo entregado"
+               Text="{Binding MontoEfectivo}"
+               Keyboard="Numeric"
+               FontSize="22" HeightRequest="64" />
+
+        <Entry Placeholder="Monto con tarjeta"
+               Text="{Binding MontoTarjeta}"
+               Keyboard="Numeric"
+               FontSize="22" HeightRequest="64" />
+
+        <!-- RF-08: cambio calculado y mostrado maximizado -->
+        <Label Text="{Binding Cambio, StringFormat='Cambio a entregar: {0:C2}'}"
+               FontSize="40" FontAttributes="Bold"
+               TextColor="Green" HorizontalOptions="Center" />
+
+        <Label Text="{Binding FaltaPorCubrir, StringFormat='Aún falta: {0:C2}'}"
+               FontSize="20" TextColor="Red" HorizontalOptions="Center"
+               IsVisible="{Binding FaltaPorCubrir, Converter={StaticResource GreaterThanZeroConverter}}" />
+
+        <Button Text="Confirmar cobro"
+                Command="{Binding ConfirmarPagoCommand}"
+                IsEnabled="{Binding PuedeConfirmar}"
+                HeightRequest="64" FontSize="20" />
+
+        <Button Text="Cancelar" Clicked="OnCancelarClicked"
+                HeightRequest="64" FontSize="20" />
+
+    </VerticalStackLayout>
+</ContentPage>

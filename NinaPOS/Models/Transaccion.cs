@@ -9,7 +9,8 @@ namespace NinaPOS.Models
         public int Id { get; set; }
         public DateTime Fecha { get; set; }
         public decimal Total { get; set; }
-        public string MetodoPago { get; set; } = string.Empty;
+        public decimal CantidadEfectivo { get; set; }
+        public decimal CantidadTarjeta { get; set; }
         public int UsuarioId { get; set; }
     }
 }
