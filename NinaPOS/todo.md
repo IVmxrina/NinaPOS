@@ -1,0 +1,8 @@
+- Crear una vista estetica en MainPage.xaml
+- Ordenar la columna 2 de MainPage.xaml
+- Añadir en el header de MainPage.xaml el nombre del usuario
+- Añadir en el header la opcion rapida de cerrar la sesion
+- Arreglar el sistema de añadir productos (que no haya un input por cantidad, sino que al escribir NxCodigo añada la cantidad deseada
+- Crear la calculadora en la columna derecha de MainPage.xaml
+- Hacer el grid correcto de la columna 2 de MainPage.xaml
+- Arreglar el sistema de cobro (simultaneidad tarjeta y efectivo, automatizaciones...)

@@ -3,75 +3,123 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-    <Grid ColumnDefinitions="2*,1*" Padding="16" RowSpacing="8">
+    <Grid RowDefinitions="auto, 1*, auto">
 
-        <!-- Columna 1: lista del ticket (sección 6.2 del PRD, "Columna 1") -->
-        <Grid Grid.Column="0" RowDefinitions="*,Auto">
+        <!-- Header de encima-->
+        <Grid Grid.Row="0" ColumnDefinitions="auto, *" BackgroundColor="LightGray" Padding="10, 5">
+            <Grid Grid.Column="0">
+                <Button
+                Text="☰"
+                HeightRequest="64" WidthRequest="64"
+                BackgroundColor="Transparent"
+                TextColor="Black" FontSize="28"/>
+            </Grid>
 
-            <CollectionView Grid.Row="0"
-                             ItemsSource="{Binding Items}"
-                             SelectedItem="{Binding ItemSeleccionado}"
-                             SelectionMode="Single">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid ColumnDefinitions="3*,2*,1*,Auto"
-      Padding="8" MinimumHeightRequest="64">
+            <Grid Grid.Column="1">
+                
+            </Grid>
 
-                            <Label Text="{Binding Nombre}"
-           VerticalOptions="Center" FontSize="18" />
-
-                            <!-- Columna de cantidad con -/+ -->
-                            <HorizontalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
-                                <Button Text="-"
-                WidthRequest="44" HeightRequest="44" FontSize="20"
-                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DisminuirCantidadCommand}"
-                CommandParameter="{Binding .}" />
-
-                                <Label Text="{Binding Cantidad}"
-               FontSize="18" VerticalOptions="Center"
-               HorizontalOptions="Center" WidthRequest="32"
-               HorizontalTextAlignment="Center" />
-
-                                <Button Text="+"
-                WidthRequest="44" HeightRequest="44" FontSize="20"
-                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AumentarCantidadCommand}"
-                CommandParameter="{Binding .}" />
-                            </HorizontalStackLayout>
-
-                            <Label Grid.Column="2" Text="{Binding Subtotal, StringFormat='{0:C2}'}"
-           VerticalOptions="Center" FontSize="18" />
-
-                            <Button Grid.Column="3" Text="✕"
-            WidthRequest="64" HeightRequest="64"
-            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EliminarItemCommand}"
-            CommandParameter="{Binding .}" />
-                        </Grid>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-
-            <Label Grid.Row="1"
-                   Text="{Binding Total, StringFormat='Total: {0:C2}'}"
-                   FontSize="32" FontAttributes="Bold"
-                   HorizontalOptions="End" Padding="8" />
+            <Grid Grid.Column="2">
+                <Label Text="Usuario"
+                       FontSize="18"
+                       Padding="20"/>
+            </Grid>
+            
         </Grid>
 
-        <!-- Columna 2: entrada de código + teclado (sección 6.2, "Columna 2") -->
-        <VerticalStackLayout Grid.Column="1" Spacing="12">
-            <Entry Placeholder="Cantidad (RF-03)"
-                   Text="{Binding CantidadPrevia}"
-                   Keyboard="Numeric"
-                   FontSize="20" HeightRequest="64" />
+        <!-- Cuerpo de la pantalla principal-->
+        <Grid Grid.Row="1" BackgroundColor="LightGray" Padding="15">
+            <Grid ColumnDefinitions="2*, 1.5*" ColumnSpacing="15">
 
-            <Entry Placeholder="Código de barras"
-                   Text="{Binding CodigoIngresado}"
-                   FontSize="20" HeightRequest="64"
-                   ReturnCommand="{Binding EscanearProductoCommand}" />
+                <!-- Columna 1 -->
+                <Border Grid.Column="0" 
+                        StrokeShape="RoundRectangle 15" 
+                        StrokeThickness="0" 
+                        BackgroundColor="White">
+                    <Grid Grid.Column="0" 
+                          RowDefinitions="*, auto">
 
-            <Button Text="Escanear / Añadir"
-                    Command="{Binding EscanearProductoCommand}"
-                    HeightRequest="64" FontSize="20" />
-        </VerticalStackLayout>
+                        <CollectionView Grid.Row="0"
+                                            ItemsSource="{Binding Items}"
+                                            SelectedItem="{Binding ItemSeleccionado}"
+                                            SelectionMode="Single">
 
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid ColumnDefinitions="3*,2*,1*,Auto"
+                                          Padding="8" 
+                                          MinimumHeightRequest="64">
+
+                                        <Label Text="{Binding Nombre}"
+                                               VerticalOptions="Center" FontSize="18" />
+
+                                        <!-- Columna de cantidad con -/+ -->
+                                        <HorizontalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                                            <Button Text="-"
+                                            WidthRequest="44" HeightRequest="44" FontSize="20"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DisminuirCantidadCommand}"
+                                            CommandParameter="{Binding .}" />
+
+                                            <Label Text="{Binding Cantidad}"
+                                           FontSize="18" VerticalOptions="Center"
+                                           HorizontalOptions="Center" WidthRequest="32"
+                                           HorizontalTextAlignment="Center" />
+
+                                            <Button Text="+"
+                                            WidthRequest="44" HeightRequest="44" FontSize="20"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AumentarCantidadCommand}"
+                                            CommandParameter="{Binding .}" />
+                                        </HorizontalStackLayout>
+
+                                        <Label Grid.Column="2" Text="{Binding Subtotal, StringFormat='{0:C2}'}"
+                                        VerticalOptions="Center" FontSize="18" />
+
+                                        <Button Grid.Column="3" Text="✕"
+                                        WidthRequest="64" HeightRequest="64"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EliminarItemCommand}"
+                                        CommandParameter="{Binding .}" />
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+
+                        </CollectionView>
+
+
+                        <Label Grid.Row="1"
+                           Text="{Binding Total, StringFormat='Total: {0:C2}'}"
+                           FontSize="32" FontAttributes="Bold"
+                           HorizontalOptions="End" Padding="8" />
+                    </Grid>
+                </Border>
+
+                <!-- Columna 2 -->
+                <Border Grid.Column="1" 
+                        StrokeShape="RoundRectangle 15" 
+                        StrokeThickness="0">
+                    <VerticalStackLayout Spacing="12" Padding="10" BackgroundColor="White">
+                        <!--<Entry Placeholder="Cantidad"
+                           Text="{Binding CantidadPrevia}"
+                           Keyboard="Numeric"
+                           FontSize="20" HeightRequest="64" /> -->
+
+                        <Entry Placeholder="Código de barras"
+                           Text="{Binding CodigoIngresado}"
+                           FontSize="20" HeightRequest="64"
+                           ReturnCommand="{Binding EscanearProductoCommand}" />
+
+                        <Button Text="Escanear / Añadir"
+                            Command="{Binding EscanearProductoCommand}"
+                            HeightRequest="64" FontSize="20" />
+                        <Button Text="Cobrar"
+                        Command="{Binding CobrarCommand}"
+                        HeightRequest="64" FontSize="20"
+                        BackgroundColor="Green" TextColor="White" />
+                    </VerticalStackLayout>
+                </Border>
+
+            </Grid>
+        </Grid>
+        
+        
     </Grid>
 </ContentPage>

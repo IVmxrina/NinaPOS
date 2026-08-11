@@ -8,5 +8,7 @@ public partial class MainPage : ContentPage
     {
         InitializeComponent();
         BindingContext = vm;
+        vm.Navigation = Navigation;
+        vm.CurrentPage = this;
     }
 }
