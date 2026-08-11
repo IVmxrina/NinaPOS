@@ -96,25 +96,35 @@
                 <Border Grid.Column="1" 
                         StrokeShape="RoundRectangle 15" 
                         StrokeThickness="0">
-                    <VerticalStackLayout Spacing="12" Padding="10" BackgroundColor="White">
-                        <!--<Entry Placeholder="Cantidad"
-                           Text="{Binding CantidadPrevia}"
-                           Keyboard="Numeric"
-                           FontSize="20" HeightRequest="64" /> -->
+                    <Grid RowDefinitions="*, 2, *" BackgroundColor="White">
+                        <VerticalStackLayout  Grid.Row="0" Spacing="12" Padding="10">
+                            <!--<Entry Placeholder="Cantidad"
+                               Text="{Binding CantidadPrevia}"
+                               Keyboard="Numeric"
+                               FontSize="20" HeightRequest="64" /> -->
 
-                        <Entry Placeholder="Código de barras"
-                           Text="{Binding CodigoIngresado}"
-                           FontSize="20" HeightRequest="64"
-                           ReturnCommand="{Binding EscanearProductoCommand}" />
+                            <Entry Placeholder="Codigo de barras"
+                                    Text="{Binding CodigoIngresado}"
+                                    FontSize="20" HeightRequest="64"
+                                    ReturnCommand="{Binding EscanearProductoCommand}" />
+                         
+                            <!-- Calculadora -->
+                            <Grid Grid.Row="1" RowDefinitions="3" ColumnDefinitions="4">
+                                <Grid Grid.Row="0" Grid.Column="0" HeightRequest="64" WidthRequest="64" BackgroundColor="AntiqueWhite"></Grid>
+                                
+                            </Grid>
 
-                        <Button Text="Escanear / Añadir"
-                            Command="{Binding EscanearProductoCommand}"
-                            HeightRequest="64" FontSize="20" />
-                        <Button Text="Cobrar"
-                        Command="{Binding CobrarCommand}"
-                        HeightRequest="64" FontSize="20"
-                        BackgroundColor="Green" TextColor="White" />
-                    </VerticalStackLayout>
+                            <Grid Grid.Row="2">
+                                <Button Text="Enter"
+                                        Command="{Binding EscanearProductoCommand}"
+                                        HeightRequest="64" FontSize="20" />
+                                <Button Text="Cobrar"
+                                        Command="{Binding CobrarCommand}"
+                                        HeightRequest="64" FontSize="20"
+                                        BackgroundColor="Green" TextColor="White" />
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Grid>
                 </Border>
 
             </Grid>
