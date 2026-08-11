@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NinaPOS.Models;
 
@@ -10,9 +11,11 @@ using NinaPOS.Models;
 namespace NinaPOS.Migrations
 {
     [DbContext(typeof(NinaPosDbContext))]
-    partial class NinaPosDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260810114513_FuncionesCobro")]
+    partial class FuncionesCobro
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.10");
