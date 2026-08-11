@@ -54,6 +54,11 @@
                    Text="{Binding Total, StringFormat='Total: {0:C2}'}"
                    FontSize="32" FontAttributes="Bold"
                    HorizontalOptions="End" Padding="8" />
+
+            <Button Text="Cobrar"
+                Command="{Binding CobrarCommand}"
+                HeightRequest="64" FontSize="20"
+                BackgroundColor="Green" TextColor="White" />
         </Grid>
 
         <!-- Columna 2: entrada de código + teclado (sección 6.2, "Columna 2") -->

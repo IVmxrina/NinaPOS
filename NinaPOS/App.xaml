@@ -10,7 +10,7 @@
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <Converters:MayorQueCeroConverter x:Key="MayorQueCeroConverter" />
+            <converters:MayorQueCeroConverter x:Key="MayorQueCeroConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

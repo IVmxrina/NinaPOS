@@ -2,12 +2,24 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using NinaPOS.Models;
+using Microsoft.Extensions.DependencyInjection;
+
 
 namespace NinaPOS.ViewModels;
 
 public partial class TicketViewModel : ObservableObject
 {
     private readonly NinaPosDbContext _db;
+    private readonly IServiceProvider _services;
+
+    public INavigation? Navigation { get; set; }
+    public Page? CurrentPage { get; set; }
+
+    public TicketViewModel(NinaPosDbContext db, IServiceProvider services)
+    {
+        _db = db;
+        _services = services;
+    }
 
     // ObservableCollection act automatica
     public ObservableCollection<TicketItem> Items { get; } = new();
@@ -27,6 +39,23 @@ public partial class TicketViewModel : ObservableObject
     public TicketViewModel(NinaPosDbContext db)
     {
         _db = db;
+    }
+
+    [RelayCommand]
+    private async Task Cobrar()
+    {
+        if (Navigation is null || Items.Count == 0) return;
+
+        var cobroVm = ActivatorUtilities.CreateInstance<CobroViewModel>(_services, Total);
+        var cobroPage = ActivatorUtilities.CreateInstance<Views.CobroPage>(_services, cobroVm);
+
+        await Navigation.PushModalAsync(cobroPage);
+
+        if (cobroVm.VentaConfirmada)
+        {
+            Items.Clear();
+            RecalcularTotal();
+        }
     }
 
     // RF-02: entrada de producto por codigo 

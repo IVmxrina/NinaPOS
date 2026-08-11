@@ -30,9 +30,9 @@
                IsVisible="{Binding FaltaPorCubrir, Converter={StaticResource GreaterThanZeroConverter}}" />
 
         <Button Text="Confirmar cobro"
-                Command="{Binding ConfirmarPagoCommand}"
-                IsEnabled="{Binding PuedeConfirmar}"
-                HeightRequest="64" FontSize="20" />
+            Clicked="OnConfirmarClicked"
+            IsEnabled="{Binding PuedeConfirmar}"
+            HeightRequest="64" FontSize="20" />
 
         <Button Text="Cancelar" Clicked="OnCancelarClicked"
                 HeightRequest="64" FontSize="20" />

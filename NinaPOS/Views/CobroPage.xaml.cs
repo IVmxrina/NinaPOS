@@ -14,4 +14,14 @@ public partial class CobroPage : ContentPage
     {
         await Navigation.PopModalAsync();
     }
+
+    private async void OnConfirmarClicked(object sender, EventArgs e)
+    {
+        var vm = (CobroViewModel)BindingContext;
+        vm.ConfirmarPagoCommand.Execute(null); // ejecuta la lógica del ViewModel
+        if (vm.VentaConfirmada)
+        {
+            await Navigation.PopModalAsync(); // el code-behind decide cuándo cerrar
+        }
+    }
 }
