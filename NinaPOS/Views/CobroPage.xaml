@@ -27,15 +27,24 @@
 
         <Label Text="{Binding FaltaPorCubrir, StringFormat='Aún falta: {0:C2}'}"
                FontSize="20" TextColor="Red" HorizontalOptions="Center"
-               IsVisible="{Binding FaltaPorCubrir, Converter={StaticResource GreaterThanZeroConverter}}" />
+               IsVisible="{Binding FaltaPorCubrir, Converter={StaticResource MayorQueCeroConverter}}" />
 
-        <Button Text="Confirmar cobro"
-            Clicked="OnConfirmarClicked"
-            IsEnabled="{Binding PuedeConfirmar}"
-            HeightRequest="64" FontSize="20" />
-
-        <Button Text="Cancelar" Clicked="OnCancelarClicked"
+        <VerticalStackLayout Padding="24" Spacing="16" VerticalOptions="Center">
+        
+            <Button Text="Tarjeta"
+                Clicked="OnConfirmarClicked"
+                IsEnabled="{Binding PuedeConfirmar}"
                 HeightRequest="64" FontSize="20" />
+
+            <Button Text="Efectivo"
+                Clicked="OnConfirmarClicked"
+                IsEnabled="{Binding PuedeConfirmar}"
+                HeightRequest="64" FontSize="20" />
+
+            <Button Text="Cancelar" Clicked="OnCancelarClicked"
+                    HeightRequest="64" FontSize="20" />
+
+        </VerticalStackLayout>
 
     </VerticalStackLayout>
 </ContentPage>
