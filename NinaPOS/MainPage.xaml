@@ -3,7 +3,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-    <Grid RowDefinitions="auto, *">
+    <Grid RowDefinitions="auto, 1*, auto">
 
         <!-- Header de encima-->
         <Grid Grid.Row="0" ColumnDefinitions="auto, *" BackgroundColor="LightBlue" Padding="10, 5">
@@ -13,6 +13,15 @@
                 HeightRequest="64" WidthRequest="64"
                 BackgroundColor="Transparent"
                 TextColor="Black" FontSize="28"/>
+            </Grid>
+
+            <Grid Grid.Column="1">
+                
+            </Grid>
+
+            <Grid Grid.Column="2">
+                <Label Text="Usuario"
+                       FontSize="18"/>
             </Grid>
             
         </Grid>
