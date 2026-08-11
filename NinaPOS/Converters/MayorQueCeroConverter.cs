@@ -2,7 +2,7 @@
 
 namespace NinaPOS.Converters;
 
-public class MAyorQueCeroConverter : IValueConverter
+public class MayorQueCeroConverter : IValueConverter
 {
     public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         => value is decimal d && d > 0;
