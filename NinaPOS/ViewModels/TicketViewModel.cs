@@ -65,12 +65,27 @@ public partial class TicketViewModel : ObservableObject
         if (string.IsNullOrWhiteSpace(CodigoIngresado))
             return;
 
+        int cantidad = 1;
+        string codigo = CodigoIngresado.Trim();
+
+        var partes = codigo.Split('x', StringSplitOptions.RemoveEmptyEntries);
+        if(partes.Length == 2 && int.TryParse(partes[0], out var cantidadParseada) && cantidadParseada > 0)
+        {
+            cantidad = cantidadParseada;
+            codigo = partes[1];
+        }  
+        else if (partes.Length == 1) //Si se introduce xN, tomará ese codigo como correcto y añadira el producto en cantidad 1
+        {
+            cantidad = 1;
+            codigo = partes[0];
+        }
+
         var producto = _db.Productos
             .FirstOrDefault(p => p.CodigoBarras == CodigoIngresado);
 
         if (producto is null)
         {
-            // En la Fase 4 esto disparara un aviso visual en pantalla;
+            // En la Fase 4 esto disparara un aviso visual en pantalla
             CodigoIngresado = string.Empty;
             return;
         }

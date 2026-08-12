@@ -88,7 +88,7 @@
                         <Label Grid.Row="1"
                            Text="{Binding Total, StringFormat='Total: {0:C2}'}"
                            FontSize="32" FontAttributes="Bold"
-                           HorizontalOptions="End" Padding="8" />
+                           HorizontalOptions="End" Padding="20 50" />
                     </Grid>
                 </Border>
 
@@ -116,35 +116,35 @@
                               RowSpacing="8" ColumnSpacing="8"
                               Padding="15">
 
-                            <Button Grid.Row="0" Grid.Column="0" Text="7" />
-                            <Button Grid.Row="0" Grid.Column="1" Text="8"/>
-                            <Button Grid.Row="0" Grid.Column="2" Text="9"/>
+                            <Button Grid.Row="0" Grid.Column="0" Text="1" FontSize="20" Clicked="OnDigitClicked"/>
+                            <Button Grid.Row="0" Grid.Column="1" Text="2" FontSize="20" Clicked="OnDigitClicked"/>
+                            <Button Grid.Row="0" Grid.Column="2" Text="3" FontSize="20" Clicked="OnDigitClicked"/>
 
-                            <Button Grid.Row="1" Grid.Column="0" Text="4"/>
-                            <Button Grid.Row="1" Grid.Column="1" Text="5"/>
-                            <Button Grid.Row="1" Grid.Column="2" Text="6"/>
+                            <Button Grid.Row="1" Grid.Column="0" Text="4" FontSize="20" Clicked="OnDigitClicked"/>
+                            <Button Grid.Row="1" Grid.Column="1" Text="5" FontSize="20" Clicked="OnDigitClicked"/>
+                            <Button Grid.Row="1" Grid.Column="2" Text="6" FontSize="20" Clicked="OnDigitClicked"/>
 
-                            <Button Grid.Row="2" Grid.Column="0" Text="1"/>
-                            <Button Grid.Row="2" Grid.Column="1" Text="2"/>
-                            <Button Grid.Row="2" Grid.Column="2" Text="3"/>
+                            <Button Grid.Row="2" Grid.Column="0" Text="7" FontSize="20" Clicked="OnDigitClicked"/>
+                            <Button Grid.Row="2" Grid.Column="1" Text="8" FontSize="20" Clicked="OnDigitClicked"/>
+                            <Button Grid.Row="2" Grid.Column="2" Text="9" FontSize="20" Clicked="OnDigitClicked"/>
 
-                            <Button Grid.Row="3" Grid.Column="0" Text="x"/>
-                            <Button Grid.Row="3" Grid.Column="1" Text="0"/>
-                            <Button Grid.Row="3" Grid.Column="2" Text="⌫"/>
+                            <Button Grid.Row="3" Grid.Column="0" Text="x" FontSize="20" Clicked="OnDigitClicked"/>
+                            <Button Grid.Row="3" Grid.Column="1" Text="0" FontSize="20" Clicked="OnDigitClicked"/>
+                            <Button Grid.Row="3" Grid.Column="2" Text="⌫" FontSize="20" Clicked="OnBorrarUltimoClicked"/>
 
                         </Grid>
 
                         <!-- Botones cobro -->
-                        <Grid Grid.Row="2"  Padding="0 15">
-                            <Button Text="Enter"
+                        <Grid Grid.Row="2" Padding="15" ColumnDefinitions="*,*" ColumnSpacing="10">
+                            <Button Grid.Column="0" Text="Enter"
                                     Command="{Binding EscanearProductoCommand}"
                                     HeightRequest="64" FontSize="20" />
-                            <Button Text="Cobrar"
+                            <Button Grid.Column="1" Text="Total"
                                     Command="{Binding CobrarCommand}"
                                     HeightRequest="64" FontSize="20"
                                     BackgroundColor="Green" TextColor="White" />
                         </Grid>
-                        
+
                     </Grid>
                 </Border>
 
