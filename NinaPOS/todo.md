@@ -1,5 +1,7 @@
 - Crear una vista estetica en MainPage.xaml
 - Añadir en el header de MainPage.xaml el nombre del usuario
 - Añadir en el header la opcion rapida de cerrar la sesion
-- Arreglar el sistema de añadir productos (que no haya un input por cantidad, sino que al escribir NxCodigo añada la cantidad deseada
-- Arreglar el sistema de cobro (simultaneidad tarjet a y efectivo, automatizaciones...)
+- Arreglar el sistema de cobro (simultaneidad tarjeta y efectivo, automatizaciones...)
+- Crear un sidepanel para la gestion de la aplicacion
+- El boton de reducir cantidad debe bloquearse una vez llegue a 1
+- 

@@ -47,7 +47,7 @@
                             <CollectionView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid ColumnDefinitions="3*,2*,1*,Auto"
-                                          Padding="8" 
+                                          Padding="15" 
                                           MinimumHeightRequest="64">
 
                                         <Label Text="{Binding Nombre}"
