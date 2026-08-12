@@ -96,8 +96,8 @@
                 <Border Grid.Column="1" 
                         StrokeShape="RoundRectangle 15" 
                         StrokeThickness="0">
-                    <Grid RowDefinitions="*, 2, *" BackgroundColor="White">
-                        <VerticalStackLayout  Grid.Row="0" Spacing="12" Padding="10">
+                    <Grid RowDefinitions="*, 3*, *" BackgroundColor="White">
+                        <Grid  Grid.Row="0" Padding="15">
                             <!--<Entry Placeholder="Cantidad"
                                Text="{Binding CantidadPrevia}"
                                Keyboard="Numeric"
@@ -107,23 +107,44 @@
                                     Text="{Binding CodigoIngresado}"
                                     FontSize="20" HeightRequest="64"
                                     ReturnCommand="{Binding EscanearProductoCommand}" />
-                         
-                            <!-- Calculadora -->
-                            <Grid Grid.Row="1" RowDefinitions="3" ColumnDefinitions="4">
-                                <Grid Grid.Row="0" Grid.Column="0" HeightRequest="64" WidthRequest="64" BackgroundColor="AntiqueWhite"></Grid>
-                                
-                            </Grid>
+                        </Grid>
 
-                            <Grid Grid.Row="2">
-                                <Button Text="Enter"
-                                        Command="{Binding EscanearProductoCommand}"
-                                        HeightRequest="64" FontSize="20" />
-                                <Button Text="Cobrar"
-                                        Command="{Binding CobrarCommand}"
-                                        HeightRequest="64" FontSize="20"
-                                        BackgroundColor="Green" TextColor="White" />
-                            </Grid>
-                        </VerticalStackLayout>
+                        <!-- Calculadora / teclado numérico -->
+                        <Grid Grid.Row="1"
+                              RowDefinitions="*,*,*,*"
+                              ColumnDefinitions="*,*,*"
+                              RowSpacing="8" ColumnSpacing="8"
+                              Padding="15">
+
+                            <Button Grid.Row="0" Grid.Column="0" Text="7" />
+                            <Button Grid.Row="0" Grid.Column="1" Text="8"/>
+                            <Button Grid.Row="0" Grid.Column="2" Text="9"/>
+
+                            <Button Grid.Row="1" Grid.Column="0" Text="4"/>
+                            <Button Grid.Row="1" Grid.Column="1" Text="5"/>
+                            <Button Grid.Row="1" Grid.Column="2" Text="6"/>
+
+                            <Button Grid.Row="2" Grid.Column="0" Text="1"/>
+                            <Button Grid.Row="2" Grid.Column="1" Text="2"/>
+                            <Button Grid.Row="2" Grid.Column="2" Text="3"/>
+
+                            <Button Grid.Row="3" Grid.Column="0" Text="x"/>
+                            <Button Grid.Row="3" Grid.Column="1" Text="0"/>
+                            <Button Grid.Row="3" Grid.Column="2" Text="⌫"/>
+
+                        </Grid>
+
+                        <!-- Botones cobro -->
+                        <Grid Grid.Row="2"  Padding="0 15">
+                            <Button Text="Enter"
+                                    Command="{Binding EscanearProductoCommand}"
+                                    HeightRequest="64" FontSize="20" />
+                            <Button Text="Cobrar"
+                                    Command="{Binding CobrarCommand}"
+                                    HeightRequest="64" FontSize="20"
+                                    BackgroundColor="Green" TextColor="White" />
+                        </Grid>
+                        
                     </Grid>
                 </Border>
 
