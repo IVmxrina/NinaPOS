@@ -88,7 +88,7 @@
                         <Label Grid.Row="1"
                            Text="{Binding Total, StringFormat='Total: {0:C2}'}"
                            FontSize="32" FontAttributes="Bold"
-                           HorizontalOptions="End" Padding="20 50" />
+                           HorizontalOptions="End" Padding="20, 50" />
                     </Grid>
                 </Border>
 
