@@ -62,12 +62,14 @@ public partial class TicketViewModel : ObservableObject
     [RelayCommand]
     private void EscanearProducto()
     {
+        // Si viene vacio no hace nada
         if (string.IsNullOrWhiteSpace(CodigoIngresado))
             return;
 
         int cantidad = 1;
         string codigo = CodigoIngresado.Trim();
 
+        // Si se introduce NxCodigo, separa el numero y el codigo y los multiplica.
         var partes = codigo.Split('x', StringSplitOptions.RemoveEmptyEntries);
         if(partes.Length == 2 && int.TryParse(partes[0], out var cantidadParseada) && cantidadParseada > 0)
         {
@@ -80,12 +82,14 @@ public partial class TicketViewModel : ObservableObject
             codigo = partes[0];
         }
 
+        // Sacamos de la base de datos el codigo del producto si este coincide
         var producto = _db.Productos
             .FirstOrDefault(p => p.CodigoBarras == CodigoIngresado);
 
+        // Si el producto es null acaba la accion
         if (producto is null)
         {
-            // En la Fase 4 esto disparara un aviso visual en pantalla
+            // TODO: esto disparara un aviso visual en pantalla
             CodigoIngresado = string.Empty;
             return;
         }
@@ -98,6 +102,7 @@ public partial class TicketViewModel : ObservableObject
         }
         else
         {
+            // Se añade un item mas al ticket
             Items.Add(new TicketItem
             {
                 ProductoId = producto.Id,
