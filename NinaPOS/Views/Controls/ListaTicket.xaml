@@ -1,0 +1,49 @@
+<ContentView
+    x:Class="NinaPOS.Views.Controls.ListaTicket"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:NinaPOS.Models"
+    x:Name="EsteControl">
+
+    <CollectionView ItemsSource="{Binding Source={x:Reference EsteControl}, Path=Items}">
+        <CollectionView.ItemTemplate>
+            <DataTemplate x:DataType="models:TicketItem">
+                <Grid ColumnDefinitions="3*,2*,1*,Auto" Padding="15" MinimumHeightRequest="64">
+
+                    <Label Text="{Binding Nombre}" VerticalOptions="Center" FontSize="18" />
+
+                    <HorizontalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center"
+                        IsVisible="{Binding Source={x:Reference EsteControl}, Path=Editable}">
+                        <Button Text="-" WidthRequest="44" HeightRequest="44" FontSize="20"
+                            Command="{Binding Source={x:Reference EsteControl}, Path=DisminuirCantidadCommand}"
+                            CommandParameter="{Binding .}" />
+                        <Label Text="{Binding Cantidad}" FontSize="18" VerticalOptions="Center"
+                            HorizontalOptions="Center" WidthRequest="32" HorizontalTextAlignment="Center" />
+                        <Button Text="+" WidthRequest="44" HeightRequest="44" FontSize="20"
+                            Command="{Binding Source={x:Reference EsteControl}, Path=AumentarCantidadCommand}"
+                            CommandParameter="{Binding .}" />
+                    </HorizontalStackLayout>
+
+                    <Label Grid.Column="1" Text="{Binding Cantidad, StringFormat='x{0}'}"
+                        VerticalOptions="Center" FontSize="18" HorizontalOptions="Center">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label"
+                                Binding="{Binding Source={x:Reference EsteControl}, Path=Editable}"
+                                Value="True">
+                                <Setter Property="IsVisible" Value="False" />
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+
+                    <Label Grid.Column="2" Text="{Binding Subtotal, StringFormat='{0:C2}'}"
+                        VerticalOptions="Center" FontSize="18" />
+
+                    <Button Grid.Column="3" Text="✕" WidthRequest="64" HeightRequest="64"
+                        Command="{Binding Source={x:Reference EsteControl}, Path=EliminarItemCommand}"
+                        CommandParameter="{Binding .}"
+                        IsVisible="{Binding Source={x:Reference EsteControl}, Path=Editable}" />
+                </Grid>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+</ContentView>

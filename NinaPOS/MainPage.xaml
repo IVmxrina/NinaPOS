@@ -1,7 +1,8 @@
 ﻿<ContentPage
     x:Class="NinaPOS.MainPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:NinaPOS.Views.Controls">
 
     <Grid RowDefinitions="auto, 1*, auto">
 
@@ -39,52 +40,14 @@
                     <Grid Grid.Column="0" 
                           RowDefinitions="*, auto">
 
-                        <CollectionView Grid.Row="0"
-                                            ItemsSource="{Binding Items}"
-                                            SelectedItem="{Binding ItemSeleccionado}"
-                                            SelectionMode="Single">
+                        <controls:ListaTicket Grid.Row="0"
+                            Items="{Binding Items}"
+                            Editable="True"
+                            AumentarCantidadCommand="{Binding AumentarCantidadCommand}"
+                            DisminuirCantidadCommand="{Binding DisminuirCantidadCommand}"
+                            EliminarItemCommand="{Binding EliminarItemCommand}" />
 
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid ColumnDefinitions="3*,2*,1*,Auto"
-                                          Padding="15" 
-                                          MinimumHeightRequest="64">
-
-                                        <Label Text="{Binding Nombre}"
-                                               VerticalOptions="Center" FontSize="18" />
-
-                                        <!-- Columna de cantidad con -/+ -->
-                                        <HorizontalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
-                                            <Button Text="-"
-                                            WidthRequest="44" HeightRequest="44" FontSize="20"
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DisminuirCantidadCommand}"
-                                            CommandParameter="{Binding .}" />
-
-                                            <Label Text="{Binding Cantidad}"
-                                           FontSize="18" VerticalOptions="Center"
-                                           HorizontalOptions="Center" WidthRequest="32"
-                                           HorizontalTextAlignment="Center" />
-
-                                            <Button Text="+"
-                                            WidthRequest="44" HeightRequest="44" FontSize="20"
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AumentarCantidadCommand}"
-                                            CommandParameter="{Binding .}" />
-                                        </HorizontalStackLayout>
-
-                                        <Label Grid.Column="2" Text="{Binding Subtotal, StringFormat='{0:C2}'}"
-                                        VerticalOptions="Center" FontSize="18" />
-
-                                        <Button Grid.Column="3" Text="✕"
-                                        WidthRequest="64" HeightRequest="64"
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EliminarItemCommand}"
-                                        CommandParameter="{Binding .}" />
-                                    </Grid>
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
-
-                        </CollectionView>
-
-
+                        
                         <Label Grid.Row="1"
                            Text="{Binding Total, StringFormat='Total: {0:C2}'}"
                            FontSize="32" FontAttributes="Bold"

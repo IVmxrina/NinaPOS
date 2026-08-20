@@ -3,48 +3,73 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vm="clr-namespace:NinaPOS.ViewModels"
+    xmlns:controls="clr-namespace:NinaPOS.Views.Controls"
     x:DataType="vm:CobroViewModel">
 
-    <VerticalStackLayout Padding="24" Spacing="16" VerticalOptions="Center">
+    <Grid RowDefinitions="auto,1*,auto">
 
-        <Label Text="{Binding TotalAPagar, StringFormat='Total a pagar: {0:C2}'}"
-               FontSize="32" FontAttributes="Bold" HorizontalOptions="Center" />
+        <!-- Header, idéntico al de MainPage -->
+        <Grid Grid.Row="0" ColumnDefinitions="auto,*" BackgroundColor="LightGray" Padding="10,5">
+            <Grid Grid.Column="0">
+                <Button Text="☰" HeightRequest="64" WidthRequest="64"
+                        BackgroundColor="Transparent" TextColor="Black" FontSize="28"/>
+            </Grid>
+        </Grid>
 
-        <Entry Placeholder="Efectivo entregado"
-               Text="{Binding MontoEfectivo}"
-               Keyboard="Numeric"
-               FontSize="22" HeightRequest="64" />
+        <!-- Cuerpo -->
+        <Grid Grid.Row="1" BackgroundColor="LightGray" Padding="15">
+            <Grid ColumnDefinitions="2*,1.5*" ColumnSpacing="15">
 
-        <Entry Placeholder="Monto con tarjeta"
-               Text="{Binding MontoTarjeta}"
-               Keyboard="Numeric"
-               FontSize="22" HeightRequest="64" />
+                <!-- Columna 1: mismo ticket, ahora de solo lectura -->
+                <Border Grid.Column="0" StrokeShape="RoundRectangle 15"
+                        StrokeThickness="0" BackgroundColor="White">
+                    <Grid RowDefinitions="*,auto">
+                        <controls:ListaTicket Grid.Row="0"
+                            Items="{Binding Items}" Editable="False" />
+                        <Label Grid.Row="1"
+                               Text="{Binding TotalAPagar, StringFormat='Total: {0:C2}'}"
+                               FontSize="32" FontAttributes="Bold"
+                               HorizontalOptions="End" Padding="20,15" />
+                    </Grid>
+                </Border>
 
-        <!-- RF-08: cambio calculado y mostrado maximizado -->
-        <Label Text="{Binding Cambio, StringFormat='Cambio a entregar: {0:C2}'}"
-               FontSize="40" FontAttributes="Bold"
-               TextColor="Green" HorizontalOptions="Center" />
+                <!-- Columna 2: entrada de pago -->
+                <Border Grid.Column="1" StrokeShape="RoundRectangle 15" StrokeThickness="0">
+                    <Grid RowDefinitions="*,3*,*" BackgroundColor="White">
 
-        <Label Text="{Binding FaltaPorCubrir, StringFormat='Aún falta: {0:C2}'}"
-               FontSize="20" TextColor="Red" HorizontalOptions="Center"
-               IsVisible="{Binding FaltaPorCubrir, Converter={StaticResource MayorQueCeroConverter}}" />
+                        <Grid Grid.Row="0" Padding="15">
+                            <Entry Placeholder="Efectivo entregado"
+                                   Text="{Binding MontoEfectivo}"
+                                   Keyboard="Numeric" FontSize="20" HeightRequest="64" />
+                        </Grid>
 
-        <VerticalStackLayout Padding="24" Spacing="16" VerticalOptions="Center">
-        
-            <Button Text="Tarjeta"
-                Clicked="OnConfirmarClicked"
-                IsEnabled="{Binding PuedeConfirmar}"
-                HeightRequest="64" FontSize="20" />
+                        <Grid Grid.Row="1" Padding="15" RowDefinitions="Auto,Auto">
+                            <Entry Grid.Row="0" Placeholder="Monto con tarjeta"
+                                   Text="{Binding MontoTarjeta}"
+                                   Keyboard="Numeric" FontSize="20" HeightRequest="64" />
+                            <Label Grid.Row="1"
+                                   Text="{Binding Cambio, StringFormat='Cambio: {0:C2}'}"
+                                   FontSize="28" FontAttributes="Bold" TextColor="Green"
+                                   HorizontalOptions="Center" Padding="0,20" />
+                        </Grid>
 
-            <Button Text="Efectivo"
-                Clicked="OnConfirmarClicked"
-                IsEnabled="{Binding PuedeConfirmar}"
-                HeightRequest="64" FontSize="20" />
+                        <!-- Misma fila de botones que MainPage, pero con roles distintos -->
+                        <Grid Grid.Row="2" Padding="15" ColumnDefinitions="*,*" ColumnSpacing="10">
+                            <Button Grid.Column="0" Text="Confirmar"
+                                    Command="{Binding ConfirmarPagoCommand}"
+                                    IsEnabled="{Binding PuedeConfirmar}"
+                                    HeightRequest="64" FontSize="20"
+                                    BackgroundColor="Green" TextColor="White" />
+                            <Button Grid.Column="1" Text="Total"
+                                    Command="{Binding VolverATicketCommand}"
+                                    HeightRequest="64" FontSize="20"
+                                    BackgroundColor="Orange" TextColor="White" />
+                        </Grid>
 
-            <Button Text="Cancelar" Clicked="OnCancelarClicked"
-                    HeightRequest="64" FontSize="20" />
+                    </Grid>
+                </Border>
 
-        </VerticalStackLayout>
-
-    </VerticalStackLayout>
+            </Grid>
+        </Grid>
+    </Grid>
 </ContentPage>
