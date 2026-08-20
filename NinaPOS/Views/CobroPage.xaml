@@ -8,7 +8,7 @@
 
     <Grid RowDefinitions="auto,1*,auto">
 
-        <!-- Header, idéntico al de MainPage -->
+        <!-- Header -->
         <Grid Grid.Row="0" ColumnDefinitions="auto,*" BackgroundColor="LightGray" Padding="10,5">
             <Grid Grid.Column="0">
                 <Button Text="☰" HeightRequest="64" WidthRequest="64"
@@ -20,7 +20,7 @@
         <Grid Grid.Row="1" BackgroundColor="LightGray" Padding="15">
             <Grid ColumnDefinitions="2*,1.5*" ColumnSpacing="15">
 
-                <!-- Columna 1: mismo ticket, ahora de solo lectura -->
+                <!-- Ticket de solo lectura -->
                 <Border Grid.Column="0" StrokeShape="RoundRectangle 15"
                         StrokeThickness="0" BackgroundColor="White">
                     <Grid RowDefinitions="*,auto">
