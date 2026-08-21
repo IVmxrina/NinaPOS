@@ -44,6 +44,7 @@ namespace NinaPOS
                     );
                     db.Usuarios.AddRange(
                         new Usuario { CodigoEmpleado = "C001", Contrasena = "1234", Nombre = "Cajero Demo", Rol = RolUsuario.Cajero },
+                        new Usuario { CodigoEmpleado = "M2003", Contrasena = "9999", Nombre = "Marina Cue", Rol = RolUsuario.Gerente },
                         new Usuario { CodigoEmpleado = "G001", Contrasena = "9999", Nombre = "Gerente Demo", Rol = RolUsuario.Gerente }
                     );
                     db.SaveChanges();
@@ -52,11 +53,6 @@ namespace NinaPOS
 
             return app;
 
-#if DEBUG
-            builder.Logging.AddDebug();
-#endif
-
-            return builder.Build();
         }
     }
 }

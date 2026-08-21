@@ -44,14 +44,8 @@
                                    Keyboard="Numeric" FontSize="20" HeightRequest="64" />
                         </Grid>
 
-                        <Grid Grid.Row="1" Padding="15" RowDefinitions="Auto,Auto">
-                            <Entry Grid.Row="0" Placeholder="Monto con tarjeta"
-                                   Text="{Binding CantidadTarjeta}"
-                                   Keyboard="Numeric" FontSize="20" HeightRequest="64" />
-                            <Label Grid.Row="1"
-                                   Text="{Binding Cambio, StringFormat='Cambio: {0:C2}'}"
-                                   FontSize="28" FontAttributes="Bold" TextColor="Green"
-                                   HorizontalOptions="Center" Padding="0,20" />
+                        <Grid Grid.Row="1" Padding="15">
+                            <controls:TecladoNumerico/>
                         </Grid>
 
                         <!-- Misma fila de botones que MainPage, pero con roles distintos -->
