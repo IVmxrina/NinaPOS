@@ -39,13 +39,14 @@
                     <Grid RowDefinitions="*,3*,*" BackgroundColor="White">
 
                         <Grid Grid.Row="0" Padding="15">
-                            <Entry Placeholder="Efectivo entregado"
+                            <Entry x:Name="InputDinero"
+                                    Placeholder="Dinero entregado"
                                    Text="{Binding CantidadEfectivo}"
                                    Keyboard="Numeric" FontSize="20" HeightRequest="64" />
                         </Grid>
 
                         <Grid Grid.Row="1" Padding="15">
-                            <controls:TecladoNumerico/>
+                            <controls:TecladoNumerico Texto="{Binding Source={x:Reference InputDinero}, Path=Text}" />
                         </Grid>
 
                         <!-- Misma fila de botones que MainPage, pero con roles distintos -->

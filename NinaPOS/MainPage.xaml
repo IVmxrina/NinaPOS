@@ -66,13 +66,15 @@
                                Keyboard="Numeric"
                                FontSize="20" HeightRequest="64" /> -->
 
-                            <Entry Placeholder="Codigo de barras"
+                            <Entry x:Name="InputCodigo"
+                                    Placeholder="Codigo de barras"
                                     Text="{Binding CodigoIngresado}"
                                     FontSize="20" HeightRequest="64"
                                     ReturnCommand="{Binding EscanearProductoCommand}" />
                         </Grid>
 
-                        <controls:TecladoNumerico Grid.Row="1" />
+                        <controls:TecladoNumerico Grid.Row="1" 
+                                                  Texto="{Binding Source={x:Reference InputCodigo}, Path=Text}"/>
 
                         <!-- Botones cobro -->
                         <Grid Grid.Row="2" Padding="15" ColumnDefinitions="*,*" ColumnSpacing="10">

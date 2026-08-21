@@ -4,4 +4,4 @@
 - Arreglar el sistema de cobro (simultaneidad tarjeta y efectivo, automatizaciones...)
 - Crear un sidepanel para la gestion de la aplicacion
 - El boton de reducir cantidad debe bloquearse una vez llegue a 1
-- 
+- Hacer que solo se pueda escribir numeros en los inputs de cobro + main
