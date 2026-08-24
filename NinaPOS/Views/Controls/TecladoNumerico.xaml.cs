@@ -50,4 +50,11 @@ public partial class TecladoNumerico : ContentView
         Texto += "x";
     }
 
+    private void CobroTarjetaClicked(object sender, EventArgs e)
+    {
+        
+    }
+    
+
+
 }
