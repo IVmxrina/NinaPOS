@@ -88,7 +88,7 @@
                                     Command="{Binding EscanearProductoCommand}"
                                     HeightRequest="64" FontSize="20" />
                             <Button Grid.Column="1" Text="Total"
-                                    Command="{Binding CobrarCommand}"
+                                    Command="{Binding PasarACobroCommand}"
                                     HeightRequest="64" FontSize="20"
                                     BackgroundColor="Green" TextColor="White" />
                         </Grid>

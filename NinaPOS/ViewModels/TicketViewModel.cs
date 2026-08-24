@@ -38,7 +38,7 @@ public partial class TicketViewModel : ObservableObject
     private TicketItem? itemSeleccionado;
 
     [RelayCommand]
-    private async Task Cobrar()
+    private async Task PasarACobro()
     {
         if (Navigation is null || Items.Count == 0) return;
 
