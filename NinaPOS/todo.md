@@ -5,3 +5,8 @@
 - Crear un sidepanel para la gestion de la aplicacion
 - El boton de reducir cantidad debe bloquearse una vez llegue a 1
 - Hacer que solo se pueda escribir numeros en los inputs de cobro + main
+- Añadir boton de coma en el teclado numerico
+- Hacer 2 paneles laterales para main y para cobro (nativos a las pagionas, no controles)
+- Hacer que al confirmar el cobro se genere una impresion del ticket
+- 
+
