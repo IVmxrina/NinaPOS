@@ -51,6 +51,44 @@ public partial class TicketViewModel : ObservableObject
     }
 
     [RelayCommand]
+    private void AnadirProductoDirecto(string codigoProducto)
+    {
+        string codigoABuscar = string.IsNullOrWhiteSpace(codigoProducto)
+        ? "7501234567893"
+        : codigoProducto.Trim();
+
+        var producto = _db.Productos.FirstOrDefault(p => p.CodigoBarras == codigoABuscar);
+
+        if (producto is null)
+        {
+            CodigoIngresado = string.Empty;
+            return;
+        }
+
+        var existente = Items.FirstOrDefault(i => i.ProductoId == producto.Id);
+        if (existente is not null)
+        {
+            existente.Cantidad += 1;
+
+            int index = Items.IndexOf(existente);
+            Items[index] = existente;
+        }
+        else
+        {
+            Items.Add(new TicketItem
+            {
+                ProductoId = producto.Id,
+                Nombre = producto.Nombre,
+                PrecioUnitario = producto.Precio,
+                Cantidad = 1
+            });
+        }
+
+        CodigoIngresado = string.Empty;
+        RecalcularTotal();
+    }
+
+    [RelayCommand]
     private void EscanearProducto()
     {
         if (string.IsNullOrWhiteSpace(CodigoIngresado))

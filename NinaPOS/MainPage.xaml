@@ -73,7 +73,8 @@
                             <controls:TecladoNumerico Grid.Row="1" 
                                                   Texto="{Binding Source={x:Reference InputCodigo}, Path=Text}"/>
                             <Grid Grid.Column="1" RowDefinitions="*, *, *, *" RowSpacing="8" Padding="0, 15">
-                                <Button Grid.Row="0" Grid.Column="1" Text="Bolsa" FontSize="20"/>
+                                <Button Grid.Row="0" Grid.Column="1" Text="Bolsa" FontSize="20" Command="{Binding AnadirProductoDirectoCommand}"
+                                         CommandParameter="{Binding Source={x:Reference InputCodigo}, Path=Text}"/>
                                 <Button Grid.Row="1" Grid.Column="1" Text="" FontSize="20"/>
                                 <Button Grid.Row="2" Grid.Column="1" Text="" FontSize="20"/>
                                 <Button Grid.Row="3" Grid.Column="1" Text="" FontSize="20"/>

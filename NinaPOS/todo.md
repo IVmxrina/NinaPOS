@@ -9,4 +9,5 @@
 - Hacer que al confirmar el cobro se genere una impresion del ticket
 - Revisar por que tras poner 1.2 de 1.25 en el cobro hace que la aplicacion se congele
 - El boton de tarjeta siempre debe estar disponible y debe tomar automaticamente el monto entero de la compra
+- Conseguir que el multiplicador y el boton de bolsa funcionen juntos
 
