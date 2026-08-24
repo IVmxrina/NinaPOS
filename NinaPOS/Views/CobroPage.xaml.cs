@@ -10,4 +10,19 @@ public partial class CobroPage : ContentPage
         BindingContext = vm;
     }
 
+    public void OnTarjetaClicked(object sender, EventArgs e)
+    {
+        if (sender is not Button boton) return;
+    }
+
+    public void OnEfectivoClicked(object sender, EventArgs e)
+    {
+        if (sender is not Button boton) return;
+    }
+
+    public void OnCuponClicked(object sender, EventArgs e)
+    {
+        if (sender is not Button boton) return;
+    }
+
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using NinaPOS.Models;
@@ -38,20 +39,45 @@ public partial class CobroViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private async Task ConfirmarPago()
+    private async Task ConfirmarPago(string metodoPago)
     {
         if (!PuedeConfirmar || _sesion.UsuarioLogueado is null || Navigation is null)
             return;
 
-        _db.Transacciones.Add(new Transaccion
+        try
         {
-            Fecha = DateTime.Now,
-            Total = TotalAPagar,
-            CantidadEfectivo = CantidadEfectivo,  // ver nota abajo
-            CantidadTarjeta = CantidadTarjeta,     // ver nota abajo
-            UsuarioId = _sesion.UsuarioLogueado.Id
-        });
-        _db.SaveChanges();
+            if (metodoPago == "tarjeta")
+            {
+                _db.Transacciones.Add(new Transaccion
+                {
+                    Fecha = DateTime.Now,
+                    Total = TotalAPagar,
+                    CantidadEfectivo = 0,  // ver nota abajo
+                    CantidadTarjeta = CantidadTarjeta,     // ver nota abajo
+                    UsuarioId = _sesion.UsuarioLogueado.Id
+                });
+                _db.SaveChanges();
+                Debug.WriteLine("Todo kul con la tarjeta");
+            }
+            else if (metodoPago == "efectivo")
+            {
+                _db.Transacciones.Add(new Transaccion
+                {
+                    Fecha = DateTime.Now,
+                    Total = TotalAPagar,
+                    CantidadEfectivo = CantidadEfectivo,  // ver nota abajo
+                    CantidadTarjeta = 0,     // ver nota abajo
+                    UsuarioId = _sesion.UsuarioLogueado.Id
+                });
+                _db.SaveChanges();
+                Debug.WriteLine("Todo kul con el efectivo");
+            }
+        } 
+        catch(Exception e)
+        {
+            Debug.WriteLine("Error al introducir la transaccion a la BD: " + e.Message);
+        }
+
 
         Items.Clear();
         await Navigation.PopModalAsync();
