@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using NinaPOS.Models;
 using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics;
 
 namespace NinaPOS.ViewModels;
 
@@ -21,6 +22,8 @@ public partial class TicketViewModel : ObservableObject
     public Page? CurrentPage { get; set; }
 
     public ObservableCollection<TicketItem> Items { get; } = new();
+
+    public bool CantidadMinima;
 
     [ObservableProperty]
     private string codigoIngresado = string.Empty;
@@ -100,10 +103,15 @@ public partial class TicketViewModel : ObservableObject
     [RelayCommand]
     private void DisminuirCantidad(TicketItem item)
     {
-        if (item.Cantidad <= 1)
-            Items.Remove(item);
+        if (item.Cantidad == 1)
+        {
+            Debug.WriteLine("TODO: deshabilitar boton");
+        }   
         else
+        {
             item.Cantidad--;
+        }
+            
 
         RecalcularTotal();
     }

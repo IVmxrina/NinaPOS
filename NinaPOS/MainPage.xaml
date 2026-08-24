@@ -61,10 +61,6 @@
                         StrokeThickness="0">
                     <Grid RowDefinitions="*, 3*, *" BackgroundColor="White">
                         <Grid  Grid.Row="0" Padding="15">
-                            <!--<Entry Placeholder="Cantidad"
-                               Text="{Binding CantidadPrevia}"
-                               Keyboard="Numeric"
-                               FontSize="20" HeightRequest="64" /> -->
 
                             <Entry x:Name="InputCodigo"
                                     Placeholder="Codigo de barras"
