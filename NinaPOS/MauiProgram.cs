@@ -35,20 +35,21 @@ namespace NinaPOS
                 //System.Diagnostics.Debug.WriteLine($"[NinaPOS] Ruta de la BD: {NinaPosDbContext.DbPath}");
                 db.Database.Migrate();
 
-                if (!db.Productos.Any())
-                {
-                    db.Productos.AddRange(
-                        new Producto { CodigoBarras = "7501234567890", Nombre = "Leche Entera 1L", Precio = 1.25m, Categoria = "Lácteos" },
-                        new Producto { CodigoBarras = "7501234567891", Nombre = "Pan de Molde", Precio = 2.10m, Categoria = "Panadería" },
-                        new Producto { CodigoBarras = "7501234567892", Nombre = "Manzanas (kg)", Precio = 1.80m, Categoria = "Frutas" }
+                
+                  /*  db.Productos.AddRange(
+                       // new Producto { CodigoBarras = "7501234567890", Nombre = "Leche Entera 1L", Precio = 1.25m, Categoria = "Lácteos" },
+                      //  new Producto { CodigoBarras = "7501234567891", Nombre = "Pan de Molde", Precio = 2.10m, Categoria = "Panadería" },
+                       // new Producto { CodigoBarras = "7501234567892", Nombre = "Manzanas (kg)", Precio = 1.80m, Categoria = "Frutas" },
+                       // new Producto { CodigoBarras = "7501234567893", Nombre = "Bolsa", Precio = 0.15m, Categoria = "Otros" }
                     );
-                    db.Usuarios.AddRange(
-                        new Usuario { CodigoEmpleado = "C001", Contrasena = "1234", Nombre = "Cajero Demo", Rol = RolUsuario.Cajero },
-                        new Usuario { CodigoEmpleado = "M2003", Contrasena = "9999", Nombre = "Marina Cue", Rol = RolUsuario.Gerente },
-                        new Usuario { CodigoEmpleado = "G001", Contrasena = "9999", Nombre = "Gerente Demo", Rol = RolUsuario.Gerente }
-                    );
+                db.Usuarios.AddRange(
+                    // new Usuario { CodigoEmpleado = "C001", Contrasena = "1234", Nombre = "Cajero Demo", Rol = RolUsuario.Cajero },
+                   // new Usuario { CodigoEmpleado = "M2003", Contrasena = "9999", Nombre = "Marina Cue", Rol = RolUsuario.Gerente }
+                      //  new Usuario { CodigoEmpleado = "G001", Contrasena = "9999", Nombre = "Gerente Demo", Rol = RolUsuario.Gerente }
+                );*/
                     db.SaveChanges();
-                }
+                    
+                
             }
 
             return app;
