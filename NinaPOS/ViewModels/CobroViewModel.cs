@@ -60,7 +60,7 @@ public partial class CobroViewModel : ObservableObject
             return;
         }
 
-        if(CantidadTarjeta > 0 )
+        if(CantidadTarjeta > 0 && CantidadTarjeta < TotalAPagar )
         {
             //TODO: metodo / forma de que se pueda hacer un cobro partido
         } 
