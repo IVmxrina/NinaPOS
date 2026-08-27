@@ -49,9 +49,9 @@
                             <controls:TecladoNumerico Grid.Column="0" Texto="{Binding Source={x:Reference InputDinero}, Path=Text}" />
                             <Grid Grid.Column="1" RowDefinitions="*, *, *, *" RowSpacing="8" Padding="0, 15">
                                 <Button Grid.Row="0" Grid.Column="1" Text="Tarjeta" FontSize="20"
-                                        Command="{Binding ConfirmarPagoCommand}" CommandParameter="tarjeta"/>
+                                        Command="{Binding GenerarTransaccionCommand}" CommandParameter="tarjeta"/>
                                 <Button Grid.Row="1" Grid.Column="1" Text="Efectivo" FontSize="20"
-                                        Command="{Binding ConfirmarPagoCommand}"
+                                        Command="{Binding GenerarTransaccionCommand}"
                                         IsEnabled="{Binding PuedeConfirmar}"
                                          CommandParameter="efectivo"/>
                             </Grid>
@@ -60,7 +60,7 @@
                         <!-- Misma fila de botones que MainPage, pero con roles distintos -->
                         <Grid Grid.Row="2" Padding="15" ColumnDefinitions="*,*" ColumnSpacing="10">
                             <Button Grid.Column="0" Text="Confirmar"
-                                    Command="{Binding ConfirmarPagoCommand}"
+                                    Command="{Binding GenerarTransaccionCommand}"
                                     IsEnabled="{Binding PuedeConfirmar}"
                                     HeightRequest="64" FontSize="20"
                                     BackgroundColor="Green" TextColor="White" />

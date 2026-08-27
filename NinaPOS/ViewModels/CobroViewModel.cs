@@ -12,25 +12,7 @@ public partial class CobroViewModel : ObservableObject
     private readonly NinaPosDbContext _db;
     private readonly SesionActual _sesion;
 
-    public ObservableCollection<TicketItem> Items { get; }
-    public INavigation? Navigation { get; set; }
-
-    public decimal TotalAPagar => Items.Sum(i => i.Subtotal);
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(Cambio))]
-    [NotifyPropertyChangedFor(nameof(PuedeConfirmar))]
-    private decimal cantidadEfectivo;
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(Cambio))]
-    [NotifyPropertyChangedFor(nameof(PuedeConfirmar))]
-    private decimal cantidadTarjeta;
-
-    public decimal Cambio => Math.Max(0, (CantidadEfectivo + CantidadTarjeta) - TotalAPagar);
-
-    public bool PuedeConfirmar => (CantidadEfectivo + CantidadTarjeta) >= TotalAPagar && Items.Count > 0;
-
+//CONTRUCTOR
     public CobroViewModel(NinaPosDbContext db, SesionActual sesion, ObservableCollection<TicketItem> items)
     {
         _db = db;
@@ -38,22 +20,91 @@ public partial class CobroViewModel : ObservableObject
         Items = items;
     }
 
-    [RelayCommand]
-    private async Task ConfirmarPago(string metodoPago)
-    {
-        if (!PuedeConfirmar || _sesion.UsuarioLogueado is null || Navigation is null)
-            return;
+//VARIABLES
+    //Conjunto de items del ticket
+    public ObservableCollection<TicketItem> Items { get; }
 
+    //Navegacion entre paginas
+    public INavigation? Navigation { get; set; }
+
+    //Cantidad de dinero total del ticket
+    public decimal TotalAPagar => Items.Sum(i => i.Subtotal);
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(Cambio))]
+    [NotifyPropertyChangedFor(nameof(PuedeConfirmar))]
+    private decimal cantidadEfectivo;
+    //TODO: arreglar este warning
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(Cambio))]
+    [NotifyPropertyChangedFor(nameof(PuedeConfirmar))]
+    private decimal cantidadTarjeta;
+    //TODO: arreglar este warning
+
+    //Una vez se ha cobrado con efectivo se indica el cambio a dar
+    public decimal Cambio => Math.Max(0, (CantidadEfectivo + CantidadTarjeta) - TotalAPagar);
+
+    //Variable que obliga a introducir una cantidad de dinero antes de poder cobrar (evitar cobrar 0)
+    public bool PuedeConfirmar => (CantidadEfectivo + CantidadTarjeta) >= TotalAPagar && Items.Count > 0;
+
+
+//METODOS
+
+    [RelayCommand]
+    private async Task PagoConTarjeta()
+    {
+        //Comprueba que los componentes necesarios para el cobro (cantidad, usuario y navegacion) estan disponibles y funcionales
+        if (!PuedeConfirmar || _sesion.UsuarioLogueado is null || Navigation is null)
+        {
+            return;
+        }
+
+        if(CantidadTarjeta > 0 )
+        {
+            //TODO: metodo / forma de que se pueda hacer un cobro partido
+        } 
+        else if (CantidadTarjeta == 0)
+        {
+            //TODO: popup de confirmacion de cobro con tarjeta para simular un datafono
+            _db.Transacciones.Add(new Transaccion
+            {
+                Fecha = DateTime.Now,
+                Total = TotalAPagar,
+                CantidadEfectivo = 0,
+                CantidadTarjeta = TotalAPagar,
+                UsuarioId = _sesion.UsuarioLogueado.Id
+            });
+        }
+        else
+        {
+            return;
+        }
+
+    }
+
+
+    [RelayCommand]
+    private async Task GenerarTransaccion(string metodoPago)
+    {
+        //Comprueba que los componentes necesarios para el cobro (cantidad, usuario y navegacion) estan disponibles y funcionales
+        if (!PuedeConfirmar || _sesion.UsuarioLogueado is null || Navigation is null)
+        {
+            return;
+        }
+            
+        //Genera una nueva transaccion para meterlo en la BD
         try
         {
+            //TODO: si el pago es con tarjeta no debe hacer falta poner el importe en el input (solo clic en el boton)
             if (metodoPago == "tarjeta")
             {
                 _db.Transacciones.Add(new Transaccion
                 {
                     Fecha = DateTime.Now,
                     Total = TotalAPagar,
-                    CantidadEfectivo = 0,  // ver nota abajo
-                    CantidadTarjeta = CantidadTarjeta,     // ver nota abajo
+                    CantidadEfectivo = 0,
+                    CantidadTarjeta = CantidadTarjeta,
                     UsuarioId = _sesion.UsuarioLogueado.Id
                 });
                 _db.SaveChanges();
@@ -65,8 +116,8 @@ public partial class CobroViewModel : ObservableObject
                 {
                     Fecha = DateTime.Now,
                     Total = TotalAPagar,
-                    CantidadEfectivo = CantidadEfectivo,  // ver nota abajo
-                    CantidadTarjeta = 0,     // ver nota abajo
+                    CantidadEfectivo = CantidadEfectivo,
+                    CantidadTarjeta = 0,
                     UsuarioId = _sesion.UsuarioLogueado.Id
                 });
                 _db.SaveChanges();
@@ -83,6 +134,7 @@ public partial class CobroViewModel : ObservableObject
         await Navigation.PopModalAsync();
     }
 
+    //Metodo de navegacion (pagina de cobro a pagina de escaneo)
     [RelayCommand]
     private async Task VolverATicket()
     {
