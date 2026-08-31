@@ -30,6 +30,22 @@ public partial class CobroViewModel : ObservableObject
     //Cantidad de dinero total del ticket
     public decimal TotalAPagar => Items.Sum(i => i.Subtotal);
 
+    [ObservableProperty]
+    public partial decimal CantidadIntroducida { get; set; }
+
+    [ObservableProperty]
+    public partial decimal CantidadTarjeta { get; set; }
+
+    [ObservableProperty]
+    public partial decimal CantidadEfectivo { get; set; }
+
+    [ObservableProperty]
+    public partial decimal CantidadRestante {  get; set; }
+
+    [ObservableProperty]
+    private bool anularVisible;
+
+
 
     //METODOS
 
@@ -41,30 +57,52 @@ public partial class CobroViewModel : ObservableObject
             return;
         }
 
-        try
+
+        //Si la cantidad introducida es menor que el total a pagar o es menor o igual a la cantidad restante se mete para proceder al pago dividido
+        if (CantidadIntroducida < TotalAPagar || CantidadIntroducida <= CantidadRestante)
         {
-            // Añadimos la transacción directamente con el TotalAPagar completo
-            _db.Transacciones.Add(new Transaccion
+            if (CantidadRestante == 0)
             {
-                Fecha = DateTime.Now,
-                Total = TotalAPagar,
-                CantidadEfectivo = 0,
-                CantidadTarjeta = TotalAPagar,
-                UsuarioId = _sesion.UsuarioLogueado.Id
-            });
-
-            // CORREGIDO: Guardamos los cambios en la base de datos (faltaba el SaveChanges en tu método original)
-            _db.SaveChanges();
-            Debug.WriteLine("Todo kul con la tarjeta (Alerta Nativa)");
-
-            // Finalizamos la transacción limpiando el carrito y cerrando la página
-            Items.Clear();
-            await Navigation.PopModalAsync();
+                CantidadRestante = TotalAPagar - CantidadIntroducida;
+            }
+            else
+            {
+                CantidadRestante = CantidadRestante - CantidadIntroducida;
+            }
+            AnularVisible = true;
         }
-        catch (Exception e)
+
+        //Si no queda una cantidad restante se procede al fin del pago
+        if (CantidadIntroducida == TotalAPagar || CantidadRestante == 0)
         {
-            Debug.WriteLine("Error al introducir la transacción de tarjeta a la BD: " + e.Message);
+            try
+                    {
+                        // Añadimos la transacción directamente con el TotalAPagar completo
+                        _db.Transacciones.Add(new Transaccion
+                        {
+                            Fecha = DateTime.Now,
+                            Total = TotalAPagar,
+                            CantidadEfectivo = 0,
+                            CantidadTarjeta = CantidadIntroducida,
+                            UsuarioId = _sesion.UsuarioLogueado.Id
+                        });
+
+                        // CORREGIDO: Guardamos los cambios en la base de datos (faltaba el SaveChanges en tu método original)
+                        _db.SaveChanges();
+                        Debug.WriteLine("Todo kul con la tarjeta (Alerta Nativa)");
+
+                // Finalizamos la transacción limpiando el carrito y cerrando la página
+                AnularVisible = false;
+                        Items.Clear();
+                        await Navigation.PopModalAsync();
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.WriteLine("Error al introducir la transacción de tarjeta a la BD: " + e.Message);
+                    }
         }
+
+        
     }
 
 
@@ -76,30 +114,59 @@ public partial class CobroViewModel : ObservableObject
         {
             return;
         }
-            
-        //Genera una nueva transaccion para meterlo en la BD
-        try
+
+        Debug.WriteLine("Cantidad introducida: " + CantidadIntroducida);
+        Debug.WriteLine("Total a pagar: " + TotalAPagar);
+
+        if (CantidadIntroducida < TotalAPagar)
         {
-                _db.Transacciones.Add(new Transaccion
-                {
-                    Fecha = DateTime.Now,
-                    Total = TotalAPagar,
-                    CantidadEfectivo = TotalAPagar,
-                    CantidadTarjeta = 0,
-                    UsuarioId = _sesion.UsuarioLogueado.Id
-                });
-                _db.SaveChanges();
-                Debug.WriteLine("Todo kul con el efectivo");
-            
-        } 
-        catch(Exception e)
-        {
-            Debug.WriteLine("Error al introducir la transaccion a la BD: " + e.Message);
+            //TODO: añadir cobro dividido
+            Debug.WriteLine("Queda por añadir el cobro dividido");
+            await Navigation.PopModalAsync();
         }
 
+        if (CantidadIntroducida == TotalAPagar)
+        {
+            //Genera una nueva transaccion para meterlo en la BD
+                    try
+                    {
+                            _db.Transacciones.Add(new Transaccion
+                            {
+                                Fecha = DateTime.Now,
+                                Total = TotalAPagar,
+                                CantidadEfectivo = CantidadIntroducida,
+                                CantidadTarjeta = 0,
+                                UsuarioId = _sesion.UsuarioLogueado.Id
+                            });
+                            _db.SaveChanges();
+                            Debug.WriteLine("Todo kul con el efectivo");
+            
+                    } 
+                    catch(Exception e)
+                    {
+                        Debug.WriteLine("Error al introducir la transaccion a la BD: " + e.Message);
+                    }
 
-        Items.Clear();
-        await Navigation.PopModalAsync();
+
+                    Items.Clear();
+                    await Navigation.PopModalAsync();
+        } 
+        else
+        {
+            return;
+        }
+
+        
+    }
+
+
+    [RelayCommand]
+    private async Task AnularTransaccion()
+    {
+        CantidadRestante = 0;
+        CantidadTarjeta = 0;
+        CantidadEfectivo = 0;
+        AnularVisible = false;
     }
 
     //Metodo de navegacion (pagina de cobro a pagina de escaneo)

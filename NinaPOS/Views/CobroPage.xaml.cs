@@ -19,7 +19,7 @@ public partial class CobroPage : ContentPage
                 // 2. Mostramos la alerta nativa y esperamos la respuesta del usuario (Sí/No)
                 bool confirmarPago = await this.DisplayAlertAsync(
                     "Simulación de Pago",
-                    $"¿Desea simular el pago con tarjeta por un total de {viewModel.TotalAPagar:C2}?",
+                    $"¿Desea simular el pago con tarjeta por un total de {viewModel.CantidadIntroducida:C2}?",
                     "Sí, Confirmar",
                     "No, Cancelar"
                 );
@@ -52,7 +52,7 @@ public partial class CobroPage : ContentPage
                 // Se muestra la alerta
                 bool confirmarPago = await this.DisplayAlertAsync(
                     "Simulación de Pago",
-                    $"¿Desea simular el pago con efectivo por un total de {viewModel.TotalAPagar:C2}?",
+                    $"¿Desea simular el pago con efectivo por un total de {viewModel.CantidadIntroducida:C2}?",
                     "Sí, Confirmar",
                     "No, Cancelar"
                 );
