@@ -28,9 +28,9 @@ public partial class CobroPage : ContentPage
                 if (confirmarPago)
                 {
                     // CORREGIDO: Validamos y ejecutamos PagoConTarjetaCommand usando ExecuteAsync
-                    if (viewModel.PagoConTarjetaCommand.CanExecute(null))
+                    if (viewModel.PagoCommand.CanExecute("tarjeta"))
                     {
-                        await viewModel.PagoConTarjetaCommand.ExecuteAsync(null);
+                        await viewModel.PagoCommand.ExecuteAsync("tarjeta");
                     }
                 }
             }
@@ -61,9 +61,9 @@ public partial class CobroPage : ContentPage
                 if (confirmarPago)
                 {
                     // CORREGIDO: Validamos y ejecutamos PagoConEfectivoCommand usando ExecuteAsync
-                    if (viewModel.PagoConEfectivoCommand.CanExecute(null))
+                    if (viewModel.PagoCommand.CanExecute("efectivo"))
                     {
-                        await viewModel.PagoConEfectivoCommand.ExecuteAsync(null);
+                        await viewModel.PagoCommand.ExecuteAsync("efectivo");
                     }
                 }
             }

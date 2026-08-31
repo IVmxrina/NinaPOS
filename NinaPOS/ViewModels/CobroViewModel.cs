@@ -50,6 +50,76 @@ public partial class CobroViewModel : ObservableObject
     //METODOS
 
     [RelayCommand]
+    private async Task Pago(string metodoPago)
+    {
+        if (Items.Count == 0 || _sesion.UsuarioLogueado is null || Navigation is null)
+        {
+            return;
+        }
+
+        //Si la cantidad introducida es menor que el total a pagar o es menor o igual a la cantidad restante se mete para proceder al pago dividido
+        if (CantidadIntroducida < TotalAPagar || CantidadIntroducida <= CantidadRestante)
+        {
+            // if que determina como retirar del monto total
+            if (CantidadRestante == 0)
+            {
+                CantidadRestante = TotalAPagar - CantidadIntroducida;
+            }
+            else
+            {
+                CantidadRestante = CantidadRestante - CantidadIntroducida;
+            }
+
+            //if que determina donde se almacena ese monto retirado
+            if (metodoPago == "tarjeta")
+            {
+                CantidadTarjeta = CantidadIntroducida + CantidadTarjeta;
+            }
+            else if (metodoPago == "efectivo")
+            {
+                CantidadEfectivo = CantidadIntroducida + CantidadEfectivo;
+            } 
+            else
+            {
+                Debug.WriteLine("Problema con el parametro de tipo de pago");
+            }
+
+            AnularVisible = true;
+        }
+
+        Debug.WriteLine("Cantidad con tarjeta: " + CantidadTarjeta + "\n" + "Cantidad con efectivo: " + CantidadEfectivo);
+
+        if (CantidadIntroducida == TotalAPagar || CantidadRestante == 0)
+        {
+            try
+            {
+                // Añadimos la transaccion directamente con el TotalAPagar completo
+                _db.Transacciones.Add(new Transaccion
+                {
+                    Fecha = DateTime.Now,
+                    Total = TotalAPagar,
+                    CantidadEfectivo = CantidadEfectivo,
+                    CantidadTarjeta = CantidadTarjeta,
+                    UsuarioId = _sesion.UsuarioLogueado.Id
+                });
+
+                // CORREGIDO: Guardamos los cambios en la base de datos (faltaba el SaveChanges en tu método original)
+                _db.SaveChanges();
+                Debug.WriteLine("Todo kul con la tarjeta (Alerta Nativa)");
+
+                // Finalizamos la transacción limpiando el carrito y cerrando la página
+                AnularVisible = false;
+                Items.Clear();
+                await Navigation.PopModalAsync();
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Error al introducir la transacción de tarjeta a la BD: " + e.Message);
+            }
+        }
+    }
+
+    [RelayCommand]
     private async Task PagoConTarjeta()
     {
         if (Items.Count == 0 || _sesion.UsuarioLogueado is null || Navigation is null)

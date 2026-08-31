@@ -57,10 +57,9 @@
                             <controls:TecladoNumerico Grid.Column="0" Texto="{Binding Source={x:Reference InputDinero}, Path=Text}" />
                             <Grid Grid.Column="1" RowDefinitions="*, *, *, *" RowSpacing="8" Padding="0, 15">
                                 <Button Grid.Row="0" Grid.Column="1" Text="Tarjeta" FontSize="20"
-                                        Clicked="OnTarjetaClicked" CommandParameter="tarjeta"/>
+                                        Clicked="OnTarjetaClicked"/>
                                 <Button Grid.Row="1" Grid.Column="1" Text="Efectivo" FontSize="20"
-                                        Clicked="OnEfectivoClicked"
-                                         CommandParameter="efectivo"/>
+                                        Clicked="OnEfectivoClicked"/>
                                 <Button Grid.Row="2" Grid.Column="1" Text="Anular" FontSize="20"
                                         Command="{Binding AnularTransaccionCommand}"
                                         IsVisible="{Binding AnularVisible}"/>
