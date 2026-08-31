@@ -30,31 +30,12 @@ public partial class CobroViewModel : ObservableObject
     //Cantidad de dinero total del ticket
     public decimal TotalAPagar => Items.Sum(i => i.Subtotal);
 
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(Cambio))]
-    [NotifyPropertyChangedFor(nameof(PuedeConfirmar))]
-    private decimal cantidadEfectivo;
-    //TODO: arreglar este warning
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(Cambio))]
-    [NotifyPropertyChangedFor(nameof(PuedeConfirmar))]
-    private decimal cantidadTarjeta;
-    //TODO: arreglar este warning
-
-    //Una vez se ha cobrado con efectivo se indica el cambio a dar
-    public decimal Cambio => Math.Max(0, (CantidadEfectivo + CantidadTarjeta) - TotalAPagar);
-
-    //Variable que obliga a introducir una cantidad de dinero antes de poder cobrar (evitar cobrar 0)
-    public bool PuedeConfirmar => (CantidadEfectivo + CantidadTarjeta) >= TotalAPagar && Items.Count > 0;
-
 
     //METODOS
 
     [RelayCommand]
     private async Task PagoConTarjeta()
     {
-        // CORREGIDO: Eliminamos 'PuedeConfirmar' porque con tarjeta cobramos directamente el total del ticket si hay items
         if (Items.Count == 0 || _sesion.UsuarioLogueado is null || Navigation is null)
         {
             return;
@@ -91,7 +72,7 @@ public partial class CobroViewModel : ObservableObject
     private async Task PagoConEfectivo(string metodoPago)
     {
         //Comprueba que los componentes necesarios para el cobro (cantidad, usuario y navegacion) estan disponibles y funcionales
-        if (!PuedeConfirmar || _sesion.UsuarioLogueado is null || Navigation is null)
+        if ( _sesion.UsuarioLogueado is null || Navigation is null)
         {
             return;
         }
@@ -103,7 +84,7 @@ public partial class CobroViewModel : ObservableObject
                 {
                     Fecha = DateTime.Now,
                     Total = TotalAPagar,
-                    CantidadEfectivo = CantidadEfectivo,
+                    CantidadEfectivo = TotalAPagar,
                     CantidadTarjeta = 0,
                     UsuarioId = _sesion.UsuarioLogueado.Id
                 });
