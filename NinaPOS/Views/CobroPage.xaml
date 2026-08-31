@@ -51,7 +51,7 @@
                                 <Button Grid.Row="0" Grid.Column="1" Text="Tarjeta" FontSize="20"
                                         Clicked="OnTarjetaClicked" CommandParameter="tarjeta"/>
                                 <Button Grid.Row="1" Grid.Column="1" Text="Efectivo" FontSize="20"
-                                        Command="{Binding GenerarTransaccionCommand}"
+                                        Clicked="OnEfectivoClicked"
                                         IsEnabled="{Binding PuedeConfirmar}"
                                          CommandParameter="efectivo"/>
                             </Grid>
