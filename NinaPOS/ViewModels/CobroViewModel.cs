@@ -49,24 +49,20 @@ public partial class CobroViewModel : ObservableObject
     public bool PuedeConfirmar => (CantidadEfectivo + CantidadTarjeta) >= TotalAPagar && Items.Count > 0;
 
 
-//METODOS
+    //METODOS
 
     [RelayCommand]
     private async Task PagoConTarjeta()
     {
-        //Comprueba que los componentes necesarios para el cobro (cantidad, usuario y navegacion) estan disponibles y funcionales
-        if (!PuedeConfirmar || _sesion.UsuarioLogueado is null || Navigation is null)
+        // CORREGIDO: Eliminamos 'PuedeConfirmar' porque con tarjeta cobramos directamente el total del ticket si hay items
+        if (Items.Count == 0 || _sesion.UsuarioLogueado is null || Navigation is null)
         {
             return;
         }
 
-        if(CantidadTarjeta > 0 && CantidadTarjeta < TotalAPagar )
+        try
         {
-            //TODO: metodo / forma de que se pueda hacer un cobro partido
-        } 
-        else if (CantidadTarjeta == 0)
-        {
-            //TODO: popup de confirmacion de cobro con tarjeta para simular un datafono
+            // Añadimos la transacción directamente con el TotalAPagar completo
             _db.Transacciones.Add(new Transaccion
             {
                 Fecha = DateTime.Now,
@@ -75,12 +71,19 @@ public partial class CobroViewModel : ObservableObject
                 CantidadTarjeta = TotalAPagar,
                 UsuarioId = _sesion.UsuarioLogueado.Id
             });
-        }
-        else
-        {
-            return;
-        }
 
+            // CORREGIDO: Guardamos los cambios en la base de datos (faltaba el SaveChanges en tu método original)
+            _db.SaveChanges();
+            Debug.WriteLine("Todo kul con la tarjeta (Alerta Nativa)");
+
+            // Finalizamos la transacción limpiando el carrito y cerrando la página
+            Items.Clear();
+            await Navigation.PopModalAsync();
+        }
+        catch (Exception e)
+        {
+            Debug.WriteLine("Error al introducir la transacción de tarjeta a la BD: " + e.Message);
+        }
     }
 
 
