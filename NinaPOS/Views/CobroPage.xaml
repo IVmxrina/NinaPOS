@@ -60,8 +60,6 @@
                         <!-- Misma fila de botones que MainPage, pero con roles distintos -->
                         <Grid Grid.Row="2" Padding="15" ColumnDefinitions="*,*" ColumnSpacing="10">
                             <Button Grid.Column="0" Text="Confirmar"
-                                    Command="{Binding GenerarTransaccionCommand}"
-                                    IsEnabled="{Binding PuedeConfirmar}"
                                     HeightRequest="64" FontSize="20"
                                     BackgroundColor="Green" TextColor="White" />
                             <Button Grid.Column="1" Text="Total"
