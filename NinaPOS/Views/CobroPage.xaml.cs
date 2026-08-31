@@ -15,9 +15,37 @@ public partial class CobroPage : ContentPage
         if (sender is not Button boton) return;
     }
 
-    public void OnEfectivoClicked(object sender, EventArgs e)
+    public async void OnEfectivoClicked(object sender, EventArgs e)
     {
-        if (sender is not Button boton) return;
+        if (BindingContext is CobroViewModel viewModel)
+        {
+            try
+            {
+                // Se muestra la alerta
+                bool confirmarPago = await this.DisplayAlertAsync(
+                    "Simulación de Pago",
+                    $"¿Desea simular el pago con efectivo por un total de {viewModel.TotalAPagar:C2}?",
+                    "Sí, Confirmar",
+                    "No, Cancelar"
+                );
+
+                // Si se acepta se procede al cobro
+                if (confirmarPago)
+                {
+                    // CORREGIDO: Validamos y ejecutamos PagoConEfectivoCommand usando ExecuteAsync
+                    if (viewModel.PagoConEfectivoCommand.CanExecute(null))
+                    {
+                        await viewModel.PagoConEfectivoCommand.ExecuteAsync(null);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Control de errores por si ocurre algun fallo inesperado en la interfaz
+                await this.DisplayAlertAsync("Error", $"No se pudo procesar la acción: {ex.Message}", "OK");
+            }
+
+        }
     }
 
     public void OnCuponClicked(object sender, EventArgs e)

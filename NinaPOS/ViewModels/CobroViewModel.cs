@@ -85,7 +85,7 @@ public partial class CobroViewModel : ObservableObject
 
 
     [RelayCommand]
-    private async Task GenerarTransaccion(string metodoPago)
+    private async Task PagoConEfectivo(string metodoPago)
     {
         //Comprueba que los componentes necesarios para el cobro (cantidad, usuario y navegacion) estan disponibles y funcionales
         if (!PuedeConfirmar || _sesion.UsuarioLogueado is null || Navigation is null)
@@ -96,22 +96,6 @@ public partial class CobroViewModel : ObservableObject
         //Genera una nueva transaccion para meterlo en la BD
         try
         {
-            //TODO: si el pago es con tarjeta no debe hacer falta poner el importe en el input (solo clic en el boton)
-            if (metodoPago == "tarjeta")
-            {
-                _db.Transacciones.Add(new Transaccion
-                {
-                    Fecha = DateTime.Now,
-                    Total = TotalAPagar,
-                    CantidadEfectivo = 0,
-                    CantidadTarjeta = CantidadTarjeta,
-                    UsuarioId = _sesion.UsuarioLogueado.Id
-                });
-                _db.SaveChanges();
-                Debug.WriteLine("Todo kul con la tarjeta");
-            }
-            else if (metodoPago == "efectivo")
-            {
                 _db.Transacciones.Add(new Transaccion
                 {
                     Fecha = DateTime.Now,
@@ -122,7 +106,7 @@ public partial class CobroViewModel : ObservableObject
                 });
                 _db.SaveChanges();
                 Debug.WriteLine("Todo kul con el efectivo");
-            }
+            
         } 
         catch(Exception e)
         {
